@@ -122,29 +122,30 @@ void validateCommand(string& command) {
 
     //once the string is validated, make it lowercase
     string processed = processInput(command);
+    char cmdChar = processed.at(0);
 
     //If block working as a switch statement, outputs lowercase command, returns true.
-    if (!processed.compare("p") || !processed.compare("play")) {
+    if (cmdChar == 'p' || !processed.compare("play")) {
         cout << "play\n\n";
         return;
     }
-    if (!processed.compare("a") || !processed.compare("pause")) {
+    if (cmdChar == 'a' || !processed.compare("pause")) {
         cout << "pause\n\n";
         return;
     }
-    if (!processed.compare("r") || !processed.compare("rewind")) {
+    if (cmdChar == 'r' || !processed.compare("rewind")) {
         cout << "rewind\n\n";
         return;
     }
-    if (!processed.compare("f") || !processed.compare("fast-forward")) {
+    if (cmdChar == 'f' || !processed.compare("fast-forward")) {
         cout << "fast-Forward\n\n";
         return;
     }
-    if (!processed.compare("s") || !processed.compare("stop")) {
+    if (cmdChar == 's' || !processed.compare("stop")) {
         cout << "stop\n\n";
         return;
     }
-    if (!processed.compare("q") || !processed.compare("quit")) {
+    if (cmdChar == 'q' || !processed.compare("quit")) {
         //prints "quit" and exits the application, no return.
         quitFunction();
     }
