@@ -72,12 +72,12 @@ int main() {
             }
         }
         // catch specific exception type
-        catch (InvalidCommandException& e) {
-            cout << e.what() << input << "\n\n";
-        }
+        //catch (InvalidCommandException& e) {
+        //    cout << e.what() << input << "\n\n";
+        //}
         // catch any std::exception type
         catch (std::exception& e) {
-            cout << e.what() << input << "\n\n";
+            cout << e.what() << ' ' << input << "\n\n";
         }
         // catch any exception type
         catch (...) {
