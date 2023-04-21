@@ -124,7 +124,8 @@ string processInput(string& userInput) {
 }
 
 //------------------------------------------------------------------------------
-// - returns true if passed string is a valid command, false otherwise
+// - routes user command to appropriate command handler
+// - throws InvalidCommandException if passed string is not a valid command
 //------------------------------------------------------------------------------
 void validateCommand(string& command) {
 
