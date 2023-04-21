@@ -29,26 +29,18 @@ using std::getline;
 using std::string;
 
 // local function prototypes
-string processInput(string& userInput);
+ string processInput(string& userInput);
 
 // these functions throw exceptions
-void validateString(string& passed);
+bool validateString(string& passed);
 void validateCommand(string& command);
 
 // exits app
 int quitFunction();
 
 //----------------------------------------------------------------------
-// InvalidStringException : throws exception on bad string input
+// InvalidCommandException : thrown on bad command input
 //----------------------------------------------------------------------
-class InvalidStringException : public std::exception {
-public:
-    const char* what() {
-        return "Invalid string exception: ";
-    }
-};
-
-// thrown on bad command input
 class InvalidCommandException : public std::exception {
 public:
     const char* what() {
@@ -69,19 +61,15 @@ int main() {
         cout << "P)lay, pA)use, R)ewind, F)ast-forward, S)top, or Q)uit?: ";
         getline(cin, input);
 
-        // handle input errors with validate functions
-        // that throw exceptions
-
         try {
-            // throws InvalidStringException
-            validateString(input);
+            if (validateString(input)) {
 
-            // throws InvalidCommandException
-            validateCommand(input);
-        }
-        // catch specific exception type
-        catch (InvalidStringException& e) {
-            cout << e.what() << input << "\n\n";
+                // throws InvalidCommandException
+                validateCommand(input);
+            }
+            else {
+                cout << "Bad string: " << input << "\n\n";
+            }
         }
         // catch specific exception type
         catch (InvalidCommandException& e) {
@@ -91,32 +79,35 @@ int main() {
         catch (std::exception& e) {
             cout << e.what() << input << "\n\n";
         }
+        // catch any exception type
+        catch (...) {
+            cout << "Unknown non-std::exception\n\n";
+        }
     }
 }
 
 //------------------------------------------------------------------------------
 // - ensures that passed string contains only alpha characters or dashes
-// - throws InvalidStringException if non-alpha character found
+// - returns false on illegal character
 //------------------------------------------------------------------------------
-void validateString(string& str) {
+bool validateString(string& str) {
 
     for (auto c : str) {
-        if (isalpha(c) || c == '-') {
-            continue;
+        if (!isalpha(c) && c != '-') {
+            return false;
         }
-
-        throw(InvalidStringException());
     }
+
+    return true;
 }
 
 //------------------------------------------------------------------------------
 // makes passed string lowercase
 //------------------------------------------------------------------------------
-string processInput(string& userInput) {
+string processInput(string& input) {
 
     string str;
-
-    for (char c : userInput) {
+    for (char c : input) {
         str.push_back(tolower(c));
     }
 
@@ -166,10 +157,7 @@ void validateCommand(string& command) {
 // exits the program
 //------------------------------------------------------------------------------
 int quitFunction() {
-    cout << "any key quits\n\n";
-    system("pause");
-
-    cout << "quit\nGoodbye!\n";
+    cout << "quit\n\nGoodbye!\n\n";
 
     exit(0);
 }
