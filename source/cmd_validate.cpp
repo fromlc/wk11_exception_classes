@@ -29,8 +29,8 @@ using std::getline;
 using std::string;
 
 // local function prototypes
- string processInput(string& userInput);
- bool validateString(string& passed);
+string processInput(string& userInput);
+bool validateString(string& passed);
 
 // this function throws InvalidCommandException exception
 void validateCommand(string& command);
